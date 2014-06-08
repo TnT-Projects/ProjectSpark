@@ -16,6 +16,7 @@ namespace ProjectSpark
         Timer myTimer = new Timer(50);
         List<Key> input = new List<Key>();
         public event ScanEvent scanEvent;
+        string a;
 
         public Scanner()
         {
