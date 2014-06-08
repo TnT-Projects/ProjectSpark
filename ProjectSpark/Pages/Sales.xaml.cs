@@ -27,6 +27,20 @@ namespace ProjectSpark.Pages
             ((MainWindow)Switcher.Switcher.pageSwitcher).Title = "Verkoop";
             scanner = new Scanner();
             scanner.scanEvent += scanner_scanEvent;
+
+            for (int i = 0; i < 15; i++)
+            {
+                TabItem test = new TabItem();
+                test.Header = i.ToString() + " LOL";
+                tbc_Products.Items.Add(test);
+            }
+
+            foreach (TabItem tab in tbc_Products.Items)
+            {
+                tab.Height = 50;
+                tab.MinWidth = 100;
+            }
+
         }
 
         void scanner_scanEvent(string EAN)
