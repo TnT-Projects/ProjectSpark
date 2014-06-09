@@ -31,6 +31,8 @@ namespace ProjectSpark.Pages
             Switcher.Switcher.pageSwitcher.serverConnection.Connect();
             //Vraag tafels aan server.  R:T staat voor Request:Tables
             Switcher.Switcher.pageSwitcher.serverConnection.SendMessageToServer("RQ:T");
+            //Listen to add tables event
+            Switcher.Switcher.pageSwitcher.serverConnection.serverTableMessage += serverConnection_serverTableMessage;
 
             
             Button button = new Button();
@@ -65,20 +67,29 @@ namespace ProjectSpark.Pages
             button4.Height = 75;
             button4.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             button4.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            
+        }
 
-            grd_GroundPlan.Children.Add(button);
-            grd_GroundPlan.Children.Add(button2);
-            grd_GroundPlan.Children.Add(button3);
-            grd_GroundPlan.Children.Add(button4);
+        void serverConnection_serverTableMessage(string id, string name, string left, string top, string right, string bottom)
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                Button button = new Button();
+                button.Content = name;
+                button.Margin = new Thickness(Convert.ToDouble(left), Convert.ToDouble(top), Convert.ToDouble(right), Convert.ToDouble(bottom));
+                button.Width = 75;
+                button.Height = 75;
+                button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                button.Background = (Brush)new BrushConverter().ConvertFrom("#134370");
+                grd_GroundPlan.Children.Add(button);
+            }));
         }
 
 
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            
-            //Switcher.Switcher.Switch(new Sales());
+            Switcher.Switcher.Switch(new Sales());
         }
     }
 }

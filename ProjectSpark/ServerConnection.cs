@@ -9,10 +9,13 @@ using System.Windows;
 
 namespace ProjectSpark
 {
+    //id, name, top, right, bottom, left
+    public delegate void ServerTableMessage(string id, string name, string top, string right, string bottom, string left);
     public class ServerConnection
     {
         private Socket _clientSocket;
         private byte[] _buffer;
+        public event ServerTableMessage serverTableMessage;
 
         public ServerConnection()
         {
@@ -48,7 +51,7 @@ namespace ProjectSpark
                 {
                     attempts++;
                     _clientSocket.Connect(IPAddress.Loopback, 100);
-                    MessageBox.Show("Verbonden!!! " + attempts + " pogingen.");
+                    //MessageBox.Show("Verbonden!!! " + attempts + " pogingen.");
                     
                     _clientSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), _clientSocket);
                 }
@@ -66,12 +69,23 @@ namespace ProjectSpark
             int received = currentSocket.EndReceive(ar);
             byte[] dataBuffer = new byte[received];
             Array.Copy(_buffer, dataBuffer, received);
-            MessageBox.Show("Message Reveived: " + Encoding.ASCII.GetString(dataBuffer));
-            string[] message = Encoding.ASCII.GetString(dataBuffer).Split('|');
-            if (message[0].Equals('T'))
+
+            string[] packets = Encoding.ASCII.GetString(dataBuffer).Split('%');
+
+            for (int i = 0; i < packets.Length; i++)
             {
-                MessageBox.Show("Message Reveived: " + Encoding.ASCII.GetString(dataBuffer));
+                string[] message = packets[i].Split('|');
+                //MessageBox.Show("'"+message[0]+"'");
+                if (message[0].Equals("T"))
+                {
+                    if (serverTableMessage != null)
+                    {
+                        serverTableMessage(message[1], message[2], message[3], message[4], message[5], message[6]);
+                    }
+                    //MessageBox.Show(packets[i]);
+                }
             }
+
             _clientSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), _clientSocket);
         }
 
