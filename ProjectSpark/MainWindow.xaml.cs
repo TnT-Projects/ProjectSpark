@@ -3,6 +3,7 @@ using ProjectSpark.Switcher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,9 +23,11 @@ namespace ProjectSpark
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ServerConnection serverConnection;
         public MainWindow()
         {
             InitializeComponent();
+            serverConnection = new ServerConnection();
             Switcher.Switcher.pageSwitcher = this;
             Switcher.Switcher.Switch(new Main());
         }

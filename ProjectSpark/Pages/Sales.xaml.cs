@@ -24,15 +24,14 @@ namespace ProjectSpark.Pages
     public partial class Sales : UserControl
     {
         Scanner scanner;
-        Socket _clientSocket;
+        
         public Sales()
         {
             InitializeComponent();
             ((MainWindow)Switcher.Switcher.pageSwitcher).Title = "Verkoop";
             scanner = new Scanner();
             scanner.scanEvent += scanner_scanEvent;
-            _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            ConnectionLoop();
+            
 
             for (int i = 0; i < 27; i++)
             {
@@ -49,24 +48,7 @@ namespace ProjectSpark.Pages
 
         }
 
-        private void ConnectionLoop()
-        {
-            int attempts = 0;
-            while (!_clientSocket.Connected)
-            {
-                try
-                {
-                    attempts++;
-                    _clientSocket.Connect(IPAddress.Loopback, 100);
-                    MessageBox.Show("Verbonden!!! " + attempts + " pogingen.");
-                }
-                catch (SocketException)
-                {
 
-                }
-            }
-
-        }
 
         void scanner_scanEvent(string EAN)
         {

@@ -75,7 +75,7 @@ namespace ProjectSpark.Pages
                 {
                     case 0:
                         //MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
-                        Switcher.Switcher.Switch(new Sales());
+                        Switcher.Switcher.Switch(new OverviewSales());
                         break;
                     case 1:
                         //MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
