@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,14 +24,15 @@ namespace ProjectSpark.Pages
     public partial class Sales : UserControl
     {
         Scanner scanner;
+        Socket _clientSocket;
         public Sales()
         {
             InitializeComponent();
             ((MainWindow)Switcher.Switcher.pageSwitcher).Title = "Verkoop";
             scanner = new Scanner();
             scanner.scanEvent += scanner_scanEvent;
-
-            
+            _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ConnectionLoop();
 
             for (int i = 0; i < 27; i++)
             {
@@ -42,6 +45,25 @@ namespace ProjectSpark.Pages
             {
                 tab.Height = 50;
                 tab.MinWidth = 100;
+            }
+
+        }
+
+        private void ConnectionLoop()
+        {
+            int attempts = 0;
+            while (!_clientSocket.Connected)
+            {
+                try
+                {
+                    attempts++;
+                    _clientSocket.Connect(IPAddress.Loopback, 100);
+                    MessageBox.Show("Verbonden!!! " + attempts + " pogingen.");
+                }
+                catch (SocketException)
+                {
+
+                }
             }
 
         }

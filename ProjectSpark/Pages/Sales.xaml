@@ -18,7 +18,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <Border Background="gray">
+                                <Border Background="Transparent">
                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding ContentControl.Content}"/>
                                 </Border>
                             </ControlTemplate>
@@ -26,6 +26,27 @@
                     </Setter>
                 </Style>
 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 <ControlTemplate x:Key="TabControlControlTemplate1"   TargetType="{x:Type TabControl}">
                     <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
                         <Grid.ColumnDefinitions>
@@ -64,7 +85,7 @@
                                                         </Border>
                                                     </RepeatButton>
                                                     <ScrollContentPresenter Grid.Column="1" Content="{TemplateBinding ScrollViewer.Content}" />
-                                                    <RepeatButton Grid.Column="2"  Command="ScrollBar.LineRightCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}">
+                                                    <RepeatButton Grid.Column="2"  Command="ScrollBar.PageRightCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}">
                                                         <Border Background="{x:Null}" >
                                                             <Path Data=" M 9 15 L 9 3 L 15 9 Z" Fill="Black" />
                                                         </Border>
