@@ -1,4 +1,5 @@
-﻿using ProjectSpark.Pages;
+﻿using MySql.Data.MySqlClient;
+using ProjectSpark.Pages;
 using ProjectSpark.Switcher;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,12 @@ namespace ProjectSpark
     public partial class MainWindow : Window
     {
         public ServerConnection serverConnection;
+        public MySqlConnection conn;
         public MainWindow()
         {
             InitializeComponent();
             serverConnection = new ServerConnection();
+            conn = ConnectionDB.getConnection();
             Switcher.Switcher.pageSwitcher = this;
             Switcher.Switcher.Switch(new Main());
         }

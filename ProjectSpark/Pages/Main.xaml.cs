@@ -34,8 +34,6 @@ namespace ProjectSpark.Pages
                 {
                     Button btn = new Button();
                     btn.Content = buttonNames[counter];
-                    //btn.Width = 300;
-                    //btn.Height = 300;
                     btn.FontSize = 20;
                     btn.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
                     btn.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;

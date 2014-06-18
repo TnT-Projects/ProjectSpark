@@ -12,6 +12,9 @@
 
 
         <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/ProjectSpark;component/Content/Images/background.jpg"/>
+        </Grid.Background>
         <TabControl HorizontalAlignment="Stretch" Margin="10,10,354,92" Width="Auto" x:Name="tbc_Products" Template="{DynamicResource TabControlControlTemplate1}" IsSynchronizedWithCurrentItem="True" VerticalAlignment="Stretch" Height="Auto">
             <TabControl.Resources>
                 <Style x:Key="TabScrollerRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
@@ -26,11 +29,6 @@
                     </Setter>
                 </Style>
 
-                
-                
-                
-                
-                
                 
                 
                 
@@ -103,8 +101,20 @@
             </TabControl.Resources>
         </TabControl>
 
-        <Button x:Name="btn_MainMenu" Content="Hoofd Menu" HorizontalAlignment="Left" Margin="10,596,0,0" VerticalAlignment="Top" Width="97" Height="76" Click="btn_MainMenu_Click"/>
-        <ListBox x:Name="lbx_Products" Margin="0,64,10,92" FontFamily="Courier New" FontSize="18" HorizontalAlignment="Right" Width="339"/>
+        <Button x:Name="btn_MainMenu" Content="Hoofd Menu" HorizontalAlignment="Left" Margin="10,0,0,10" Width="97" Click="btn_MainMenu_Click" Height="76" VerticalAlignment="Bottom"/>
+        <ListBox x:Name="lbx_Products" Margin="0,60,10,92" FontFamily="Courier New" FontSize="18" HorizontalAlignment="Right" Width="339">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="x"/>
+                        <Label Width="30" Content="{Binding Path=Value}"/>
+                        <Label Margin="0,0,0,0" Content="{Binding Path=Key}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="btn_Pay" Content="Afrekenen" Margin="0,0,10,10" Height="76" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="339"/>
+        <Button x:Name="btn_removeProduct" Content="Verwijder Product" Margin="0,10,10,0" HorizontalAlignment="Right" Width="339" Height="45" VerticalAlignment="Top" Click="btn_removeProduct_Click"/>
 
     </Grid>
 </UserControl>

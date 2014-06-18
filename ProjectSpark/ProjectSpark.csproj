@@ -60,6 +60,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ConnectionDB.cs" />
+    <Compile Include="MySql Controller Klassen\tbl_categorieController.cs" />
+    <Compile Include="MySql Controller Klassen\tbl_productenController.cs" />
+    <Compile Include="MySql Data Klassen\tbl_categorie.cs" />
+    <Compile Include="MySql Data Klassen\tbl_producten.cs" />
     <Compile Include="Pages\OverviewSales.xaml.cs">
       <DependentUpon>OverviewSales.xaml</DependentUpon>
     </Compile>

@@ -50,9 +50,7 @@ namespace ProjectSpark
                 try
                 {
                     attempts++;
-                    _clientSocket.Connect(IPAddress.Loopback, 100);
-                    //MessageBox.Show("Verbonden!!! " + attempts + " pogingen.");
-                    
+                    _clientSocket.Connect(IPAddress.Loopback, 100);                    
                     _clientSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), _clientSocket);
                 }
                 catch (SocketException)
@@ -75,17 +73,14 @@ namespace ProjectSpark
             for (int i = 0; i < packets.Length; i++)
             {
                 string[] message = packets[i].Split('|');
-                //MessageBox.Show("'"+message[0]+"'");
                 if (message[0].Equals("T"))
                 {
                     if (serverTableMessage != null)
                     {
                         serverTableMessage(message[1], message[2], message[3], message[4], message[5], message[6]);
                     }
-                    //MessageBox.Show(packets[i]);
                 }
             }
-
             _clientSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), _clientSocket);
         }
 
