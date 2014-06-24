@@ -22,14 +22,14 @@ namespace ProjectSpark.Pages
     /// </summary>
     public partial class Products : UserControl
     {
-        tbl_producten selectedProduct;
+        producten selectedProduct;
         public Products()
         {
             InitializeComponent();
             //Vul listbox met producten
-            lbx_products.ItemsSource = tbl_productenController.getProducts();
+            lbx_products.ItemsSource = productenDB.getProducts();
             //Vul combobox met categorien
-            cbb_categories.ItemsSource = tbl_categorieController.getCategories();
+            cbb_categories.ItemsSource = categorieDB.getCategories();
             //Disable controls untill they're filled
             tbx_productNaam.IsEnabled = false;
             tbx_productPrijs.IsEnabled = false;
@@ -39,22 +39,35 @@ namespace ProjectSpark.Pages
 
         private void lbx_products_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Enable Controls
             tbx_productNaam.IsEnabled = true;
             tbx_productPrijs.IsEnabled = true;
             cbb_categories.IsEnabled = true;
 
+<<<<<<< HEAD
+            //Controls opvullen
             selectedProduct = (tbl_producten)lbx_products.SelectedItem;
+=======
+            selectedProduct = (producten)lbx_products.SelectedItem;
 
+>>>>>>> origin/master
             tbx_productNaam.Text = selectedProduct.Prd_naam;
-
             tbx_productPrijs.Text = selectedProduct.Prd_prijs.ToString();
 
-            foreach (tbl_categorie item in cbb_categories.Items)
+            foreach (categorie item in cbb_categories.Items)
             {
                 if (selectedProduct.Prd_cat_id.Equals(item.Cat_id))
                 {
                     cbb_categories.SelectedItem = item;
                 }
+            }
+        }
+
+        private void btn_MainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Weet u zeker dat u dit scherm wilt verlaten?", "Annuleren", MessageBoxButton.YesNo, MessageBoxImage.Warning).Equals(MessageBoxResult.Yes))
+            {
+                Switcher.Switcher.Switch(new Main());
             }
         }
     }
