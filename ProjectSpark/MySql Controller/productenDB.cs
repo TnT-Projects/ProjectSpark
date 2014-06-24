@@ -2,35 +2,32 @@
 using ProjectSpark.MySql_Klassen;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectSpark.MySql_Controller_Klassen
 {
-    class tbl_productenController
+    class productenDB
     {
 
-        public static List<tbl_producten> getProducts()
+        public static List<producten> getProducts()
         {
-            List<tbl_producten> lijst = new List<tbl_producten>();
-            //MySqlConnection conn = Switcher.Switcher.pageSwitcher.conn;
+            List<producten> lijst = new List<producten>();
+            MySqlConnection conn = new MySqlConnection();
             MySqlCommand cmd;
             MySqlDataReader rdr;
-            string stm = "Select * FROM tbl_producten";
+            string stm = "SELECT * FROM tbl_producten";
             try
             {
-                Switcher.Switcher.pageSwitcher.conn.Open();
-                //cmd = conn.CreateCommand();
-                cmd = new MySqlCommand(stm, Switcher.Switcher.pageSwitcher.conn);
+                conn = ConnectionDB.getConnection();
+                conn.Open(); 
+                cmd = new MySqlCommand(stm, conn);
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     int id = (int)rdr["prd_id"];
                     int cat_id = (int)rdr["prd_cat_id"];
-                    string Naam = (string)rdr["prd_naam"];
+                    string naam = (string)rdr["prd_naam"];
                     float prijs = (float)rdr["prd_prijs"];
-                    lijst.Add(new tbl_producten(id, cat_id, Naam, prijs));
+                    lijst.Add(new producten(id, cat_id, naam, prijs));
                 }
             }
             catch (MySqlException ex)
@@ -39,21 +36,22 @@ namespace ProjectSpark.MySql_Controller_Klassen
             }
             finally
             {
-                Switcher.Switcher.pageSwitcher.conn.Close();
+                conn.Close();
             }
             return lijst;
         }
 
 
-        public static List<tbl_producten> getProductsByCategories(int prd_cat_id)
+        public static List<producten> getProductsByCategories(int prd_cat_id)
         {
-            List<tbl_producten> lijst = new List<tbl_producten>();
-            MySqlConnection conn = ConnectionDB.getConnection();
+            List<producten> lijst = new List<producten>();
+            MySqlConnection conn = new MySqlConnection();
             MySqlCommand cmd;
             MySqlDataReader rdr;
             string stm = "SELECT * FROM tbl_producten WHERE prd_cat_id=" + prd_cat_id;
             try
             {
+                conn = ConnectionDB.getConnection();
                 conn.Open();
                 cmd = conn.CreateCommand();
                 cmd = new MySqlCommand(stm, conn);
@@ -62,9 +60,9 @@ namespace ProjectSpark.MySql_Controller_Klassen
                 {
                     int id = (int)rdr["prd_id"];
                     int cat_id = (int)rdr["prd_cat_id"];
-                    string Naam = (string)rdr["prd_naam"];
+                    string naam = (string)rdr["prd_naam"];
                     float prijs = (float)rdr["prd_prijs"];
-                    lijst.Add(new tbl_producten(id, cat_id, Naam, prijs));
+                    lijst.Add(new producten(id, cat_id, naam, prijs));
                 }
             }
             catch (MySqlException ex)

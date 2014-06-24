@@ -2,31 +2,29 @@
 using ProjectSpark.MySql_Klassen;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectSpark.MySql_Controller_Klassen
 {
-    class tbl_categorieController
+    class categorieDB
     {
-        public static List<tbl_categorie> getCategories()
+        public static List<categorie> getCategories()
         {
-            List<tbl_categorie> lijst = new List<tbl_categorie>();
+            List<categorie> lijst = new List<categorie>();
+            MySqlConnection conn = new MySqlConnection();
             MySqlCommand cmd;
             MySqlDataReader rdr;
             string stm = "Select * FROM tbl_categorie";
             try
             {
-                Switcher.Switcher.pageSwitcher.conn.Open();
-                //cmd = Switcher.Switcher.pageSwitcher.conn.CreateCommand();
-                cmd = new MySqlCommand(stm, Switcher.Switcher.pageSwitcher.conn);
+                conn = ConnectionDB.getConnection();
+                conn.Open();
+                cmd = new MySqlCommand(stm, conn);
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     int id = (int)rdr["cat_id"];
-                    string Naam = (string)rdr["cat_naam"];
-                    lijst.Add(new tbl_categorie(id, Naam));
+                    string naam = (string)rdr["cat_naam"];
+                    lijst.Add(new categorie(id, naam));
                 }
             }
             catch (MySqlException ex)
@@ -35,7 +33,7 @@ namespace ProjectSpark.MySql_Controller_Klassen
             }
             finally
             {
-                Switcher.Switcher.pageSwitcher.conn.Close();
+                conn.Close();
             }
             return lijst;
         }
