@@ -30,5 +30,10 @@ namespace ProjectSpark.MySql_Klassen
             this.cat_id = id;
             this.cat_naam = cat_naam;
         }
+
+        public override string ToString()
+        {
+            return cat_naam.ToString();
+        }
     }
 }

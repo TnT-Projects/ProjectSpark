@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="ProjectSpark.Pages.Products"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="689" d:DesignWidth="1265">
+    <Grid >
+        <Grid.Background>
+            <ImageBrush ImageSource="/ProjectSpark;component/Content/Images/background.jpg"/>
+        </Grid.Background>
+        <ListBox x:Name="lbx_products" Margin="10,10,0,91" FontFamily="Courier New" FontSize="16" HorizontalAlignment="Left" Width="326" SelectionChanged="lbx_products_SelectionChanged"/>
+        <GroupBox Header="Product" Margin="341,0,10,91">
+            <Grid >
+                <Label Content="Naam:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbx_productNaam" HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="258"/>
+                <Label Content="Prijs:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbx_productPrijs" HorizontalAlignment="Left" Height="23" Margin="10,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="258"/>
+                <Label Content="Categorie:" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cbb_categories" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top" Width="258"/>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btn_MainMenu" HorizontalAlignment="Left" Margin="10,0,0,10" Width="165"  Height="76" VerticalAlignment="Bottom" Content="ã" FontFamily="/ProjectSpark;component/Content/Fonts/#Sosa" FontSize="48"/>
+        <Button x:Name="btn_Pay" Margin="0,0,6,10" Content="å" Height="76" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="165"  FontFamily="/ProjectSpark;component/Content/Fonts/#Sosa" FontSize="48"/>
+        <Button x:Name="btn_removeProduct" Content="ç" Margin="0,0,191,10" Height="76" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="165" FontFamily="/ProjectSpark;component/Content/Fonts/#Sosa" FontSize="48"/>
+
+    </Grid>
+</UserControl>

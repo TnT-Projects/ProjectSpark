@@ -1,5 +1,6 @@
 ﻿using ProjectSpark.MySql_Controller_Klassen;
 using ProjectSpark.MySql_Klassen;
+using ProjectSpark.Switcher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace ProjectSpark.Pages
     /// <summary>
     /// Interaction logic for Sales.xaml
     /// </summary>
-    public partial class Sales : UserControl
+    public partial class Sales : UserControl, ISwitchable
     {
         Scanner scanner;
         List<tbl_producten> selectedProducts;
@@ -57,10 +58,12 @@ namespace ProjectSpark.Pages
                     Button button = new Button();
                     {
                         button.Content = product.Prd_naam;
-                        button.Width = 100;
-                        button.Height = 100;
+                        button.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+                        button.Width = 125;
+                        button.Height = 125;
                         button.Margin = new Thickness(5);
                         button.Tag = product;
+                        button.Background = Brushes.GhostWhite;
                         button.Click += button_Click;
                         wrpPanel.Children.Add(button);
                     }
@@ -81,6 +84,7 @@ namespace ProjectSpark.Pages
             tbl_producten product = (tbl_producten)((Button)sender).Tag;
 
             selectedProducts.Add(product);
+            lbl_SelectedProduct.Content = product.Prd_naam;
             UpdateProductListbox();
 
             foreach (KeyValuePair<tbl_producten, int> item in lbx_Products.Items)
@@ -98,7 +102,6 @@ namespace ProjectSpark.Pages
             counts = selectedProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
             //lbx_Products.Items.Clear();
             lbx_Products.ItemsSource = counts;// selectedProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count()); ;
-
         }
 
         void scanner_scanEvent(string EAN)
@@ -106,18 +109,7 @@ namespace ProjectSpark.Pages
             //SCAN EVENT, LOOK IN DATABSE FOR PRODUCT
             this.Dispatcher.Invoke((Action)(() =>
             {
-                if (EAN.Equals("5449000000996"))
-                {
-                    MessageBox.Show("Cola");
-                }
-                else if (EAN.Equals("54491014"))
-                {
-                    lbx_Products.Items.Add(("Cola Mini").PadRight(40) + string.Format("{0:c}", 1.90));
-                }
-                else
-                {
-                    lbx_Products.Items.Add((EAN).PadRight(40) + string.Format("{0:c}", 5.90));
-                }
+                //BARSCANNER LOGIC HERE
             }));
         }
 
@@ -133,6 +125,9 @@ namespace ProjectSpark.Pages
             if (lbx_Products.SelectedItem != null)
             {
                 int selectedIndex = lbx_Products.SelectedIndex;
+
+                lbl_SelectedProduct.Content = "- " + ((tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_Products.SelectedItem).Key)).Prd_naam;
+
                 // Figure out a way to remove LAST added product of that name
                 selectedProducts.RemoveAt(GetLastIndexOfProduct((tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_Products.SelectedItem).Key))); //((tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_Products.SelectedItem).Key));
                 UpdateProductListbox();
@@ -141,10 +136,12 @@ namespace ProjectSpark.Pages
                     selectedIndex--;
                 }
                 lbx_Products.SelectedIndex = selectedIndex;
+                
             }
             else
             {
-                MessageBox.Show("Er dient eerst een product geselecteerd te worden, alvorens te verwijderen.");
+                lbl_SelectedProduct.Content = "Geen product geselecteerd!";
+                //MessageBox.Show("Er dient eerst een product geselecteerd te worden, alvorens te verwijderen.");
             }
 
             
@@ -164,7 +161,16 @@ namespace ProjectSpark.Pages
             return 0;
         }
 
+        private void btn_Pay_Click(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switcher.Switch(new Payment(selectedProducts), this);
+        }
 
-        
+        public void UtilizeState(object state)
+        {
+            //Opvullen State
+            this.selectedProducts = ((Sales)state).selectedProducts;
+            this.UpdateProductListbox();
+        }
     }
 }

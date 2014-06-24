@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSpark.Switcher;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace ProjectSpark.Pages
     /// <summary>
     /// Interaction logic for Main.xaml
     /// </summary>
-    public partial class Main : UserControl
+    public partial class Main : UserControl, ISwitchable
     {
         List<string> buttonNames;
 
@@ -26,7 +27,7 @@ namespace ProjectSpark.Pages
         {
             InitializeComponent();
             ((MainWindow)Switcher.Switcher.pageSwitcher).Title = "Hoofd Menu";
-            buttonNames = new List<string>() { "Verkoop","Bestellingen","Promoties","Klanten","Produkten","Rapport","Inventaris","Instellingen","Log uit" };
+            buttonNames = new List<string>() { "Verkoop","Bestellingen","Promoties","Klanten","Produkten","Categorieën","Inventaris","Instellingen","Afsluiten" };
             int counter = 0;
             for (int i = 0; i < grd_MainMenu.RowDefinitions.Count; i++)
             {
@@ -71,37 +72,35 @@ namespace ProjectSpark.Pages
             {
                 switch (Convert.ToInt32(((Button)sender).Tag))
                 {
-                    case 0:
+                    case 0: //VERKOOP
                         //MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
                         Switcher.Switcher.Switch(new OverviewSales());
                         break;
-                    case 1:
+                    case 1: //BESTELLINGEN
+                        MessageBox.Show("Bestellingen niet beschikbaar!");
+                        //Switcher.Switcher.Switch(new Window1());
+                        break;
+                    case 2: //Promoties
+                        MessageBox.Show("Promoties niet beschikbaar!");
+                        break;
+                    case 3: //Klanten
+                        MessageBox.Show("Klanten niet beschikbaar!");
+                        break;
+                    case 4: //Producten
                         //MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
-                        Switcher.Switcher.Switch(new Window1());
+                        Switcher.Switcher.Switch(new Products());
                         break;
-                    case 2:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
+                    case 5: //Categorieën
+                        MessageBox.Show("Categorieën niet beschikbaar!");
                         break;
-                    case 3:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
+                    case 6: //Inventaris
+                        MessageBox.Show("Inventaris niet beschikbaar!");
                         break;
-                    case 4:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
+                    case 7: //INSTELLINGEN
+                        MessageBox.Show("Instellingen niet beschikbaar!");
                         break;
-                    case 5:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
-                        break;
-                    case 6:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
-                        break;
-                    case 7:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
-                        break;
-                    case 8:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
-                        break;
-                    case 9:
-                        MessageBox.Show(Convert.ToInt32(((Button)sender).Tag).ToString());
+                    case 8: //AFSLUITEN
+                        MessageBox.Show("Afsluiten niet beschikbaar!");
                         break;
                     default:
                         break;
@@ -111,6 +110,11 @@ namespace ProjectSpark.Pages
             {
                 MessageBox.Show("lol " + ex);
             }
+        }
+
+        public void UtilizeState(object state)
+        {
+            throw new NotImplementedException();
         }
     }
 }

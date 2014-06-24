@@ -3,6 +3,7 @@ using ProjectSpark.Pages;
 using ProjectSpark.Switcher;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -29,8 +30,29 @@ namespace ProjectSpark
         public MainWindow()
         {
             InitializeComponent();
+
+            //Verbinding met database testen
             serverConnection = new ServerConnection();
             conn = ConnectionDB.getConnection();
+            try
+            {
+                //conn.Open();
+                string sql = "SELECT CURDATE();";
+                MySqlCommand cmd = cmd = new MySqlCommand(sql, conn); //conn.CreateCommand();
+                conn.Open();
+                DateTime newProdID = (DateTime)cmd.ExecuteScalar();
+                //MessageBox.Show(newProdID.ToString());//cmd = new MySqlCommand(sql, conn);
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Foutcode: 8005250 Kon geen verbinding maken met de database, applicatie wordt nu beëindigd!\n" + ex.Message);
+                this.Close();
+            }
+            finally
+            {
+                conn.Close();
+            }
+            
             Switcher.Switcher.pageSwitcher = this;
             Switcher.Switcher.Switch(new Main());
         }

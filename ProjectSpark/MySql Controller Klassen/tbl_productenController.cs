@@ -14,22 +14,22 @@ namespace ProjectSpark.MySql_Controller_Klassen
         public static List<tbl_producten> getProducts()
         {
             List<tbl_producten> lijst = new List<tbl_producten>();
-            MySqlConnection conn = Switcher.Switcher.pageSwitcher.conn;
+            //MySqlConnection conn = Switcher.Switcher.pageSwitcher.conn;
             MySqlCommand cmd;
             MySqlDataReader rdr;
             string stm = "Select * FROM tbl_producten";
             try
             {
-                conn.Open();
-                cmd = conn.CreateCommand();
-                cmd = new MySqlCommand(stm, conn);
+                Switcher.Switcher.pageSwitcher.conn.Open();
+                //cmd = conn.CreateCommand();
+                cmd = new MySqlCommand(stm, Switcher.Switcher.pageSwitcher.conn);
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     int id = (int)rdr["prd_id"];
                     int cat_id = (int)rdr["prd_cat_id"];
                     string Naam = (string)rdr["prd_naam"];
-                    float prijs = (float)rdr["prd_naam"];
+                    float prijs = (float)rdr["prd_prijs"];
                     lijst.Add(new tbl_producten(id, cat_id, Naam, prijs));
                 }
             }
@@ -39,10 +39,11 @@ namespace ProjectSpark.MySql_Controller_Klassen
             }
             finally
             {
-                conn.Close();
+                Switcher.Switcher.pageSwitcher.conn.Close();
             }
             return lijst;
         }
+
 
         public static List<tbl_producten> getProductsByCategories(int prd_cat_id)
         {

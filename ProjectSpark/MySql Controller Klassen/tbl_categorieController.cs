@@ -19,7 +19,7 @@ namespace ProjectSpark.MySql_Controller_Klassen
             try
             {
                 Switcher.Switcher.pageSwitcher.conn.Open();
-                cmd = Switcher.Switcher.pageSwitcher.conn.CreateCommand();
+                //cmd = Switcher.Switcher.pageSwitcher.conn.CreateCommand();
                 cmd = new MySqlCommand(stm, Switcher.Switcher.pageSwitcher.conn);
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())

@@ -27,12 +27,14 @@ namespace ProjectSpark.Pages
         public OverviewSales()
         {
             InitializeComponent();
+            //Set window title!
+            ((MainWindow)Switcher.Switcher.pageSwitcher).Title = "Tafel overzicht";
             //Maak verbinding met server
-            Switcher.Switcher.pageSwitcher.serverConnection.Connect();
+            //Switcher.Switcher.pageSwitcher.serverConnection.Connect();
             //Vraag tafels aan server.  R:T staat voor Request:Tables
-            Switcher.Switcher.pageSwitcher.serverConnection.SendMessageToServer("RQ:T");
+            //Switcher.Switcher.pageSwitcher.serverConnection.SendMessageToServer("RQ:T");
             //Listen to add tables event
-            Switcher.Switcher.pageSwitcher.serverConnection.serverTableMessage += serverConnection_serverTableMessage;
+            //Switcher.Switcher.pageSwitcher.serverConnection.serverTableMessage += serverConnection_serverTableMessage;
 
         }
 
