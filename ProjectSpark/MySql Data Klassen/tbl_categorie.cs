@@ -1,15 +1,17 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ProjectSpark.MySql_Klassen
 {
-    class categorie
+    class tbl_categorie
     {
         int cat_id;
         string cat_naam;
 
-        //EDIT VOOR COMMIT TESTSSSSS
 
         public int Cat_id
         {
@@ -23,7 +25,7 @@ namespace ProjectSpark.MySql_Klassen
             set { cat_naam = value; }
         }
 
-        public categorie(int id, string cat_naam)
+        public tbl_categorie(int id, string cat_naam)
         {
             this.cat_id = id;
             this.cat_naam = cat_naam;

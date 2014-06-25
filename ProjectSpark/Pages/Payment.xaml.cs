@@ -22,29 +22,29 @@ namespace ProjectSpark.Pages
     /// </summary>
     public partial class Payment : UserControl, ISwitchable
     {
-        List<producten> products;
-        List<producten> subProducts;
+        List<tbl_producten> products;
+        List<tbl_producten> subProducts;
         object previousState;
 
-        public Payment(List<producten> products)
+        public Payment(List<tbl_producten> products)
         {
             InitializeComponent();
             this.products = products;
-            this.subProducts = new List<producten>();
+            this.subProducts = new List<tbl_producten>();
             UpdateProductListbox();
         }
 
         //Update listbox view
         private void UpdateProductListbox()
         {
-            Dictionary<producten, int> counts = products.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+            Dictionary<tbl_producten, int> counts = products.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
             lbx_Products.ItemsSource = counts;
         }
 
         //Update listbox view
         private void UpdateSubProductListbox()
         {
-            Dictionary<producten, int> counts = subProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+            Dictionary<tbl_producten, int> counts = subProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
             lbx_SubProducts.ItemsSource = counts;
         }
 
@@ -59,13 +59,13 @@ namespace ProjectSpark.Pages
         }
 
         //Remove selecteditem objects from list
-        private void removeProduct(List<producten> list, ListBox listBox, producten product)
+        private void removeProduct(List<tbl_producten> list, ListBox listBox, tbl_producten product)
         {
-            list.RemoveAt(GetLastIndexOfProduct(list, (producten)(((KeyValuePair<producten, int>)listBox.SelectedItem).Key)));
+            list.RemoveAt(GetLastIndexOfProduct(list, (tbl_producten)(((KeyValuePair<tbl_producten, int>)listBox.SelectedItem).Key)));
         }
 
         //Find last index of a product in a list
-        private int GetLastIndexOfProduct(List<producten> list, producten product)
+        private int GetLastIndexOfProduct(List<tbl_producten> list, tbl_producten product)
         {
             for (int i = list.Count - 1; i > -1; i--)
             {
@@ -81,8 +81,8 @@ namespace ProjectSpark.Pages
         {
             try
             {
-                subProducts.Add((producten)(((KeyValuePair<producten, int>)lbx_Products.SelectedItem).Key));
-                removeProduct(products, lbx_Products, (producten)(((KeyValuePair<producten, int>)lbx_Products.SelectedItem).Key));
+                subProducts.Add((tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_Products.SelectedItem).Key));
+                removeProduct(products, lbx_Products, (tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_Products.SelectedItem).Key));
                 UpdateProductListbox();
                 UpdateSubProductListbox();
             }
@@ -96,8 +96,8 @@ namespace ProjectSpark.Pages
         {
             try
             {
-                products.Add((producten)(((KeyValuePair<producten, int>)lbx_SubProducts.SelectedItem).Key));
-                removeProduct(subProducts, lbx_SubProducts, (producten)(((KeyValuePair<producten, int>)lbx_SubProducts.SelectedItem).Key));
+                products.Add((tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_SubProducts.SelectedItem).Key));
+                removeProduct(subProducts, lbx_SubProducts, (tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_SubProducts.SelectedItem).Key));
                 UpdateProductListbox();
                 UpdateSubProductListbox();
             }
@@ -112,7 +112,7 @@ namespace ProjectSpark.Pages
             double totaal = 0;
             if (subProducts.Count > 0)
             {
-                foreach (producten item in subProducts)
+                foreach (tbl_producten item in subProducts)
                 {
                     totaal += item.Prd_prijs;
                 }
@@ -122,7 +122,7 @@ namespace ProjectSpark.Pages
             }
             else
             {
-                foreach (producten item in products)
+                foreach (tbl_producten item in products)
                 {
                     totaal += item.Prd_prijs;
                 }
