@@ -105,12 +105,10 @@
         <ListBox x:Name="lbx_Products" Margin="0,10,10,92" FontFamily="Courier New" FontSize="18" HorizontalAlignment="Right" Width="350" Background="#7FFFFFFF" Grid.ColumnSpan="2">
             <ListBox.ItemTemplate>
                     <DataTemplate>
-                    
                         <StackPanel Margin="0,0,0,0"  Orientation="Horizontal">
-
-                            <Label Content="x"/>
-                            <Label Width="30" Content="{Binding Path=Value}"/>
-                            <Label Margin="0,0,0,0" Content="{Binding Path=Key}"/>
+                            <Label Height="50" Content="x"/>
+                        <Label Height="50" Width="30" Content="{Binding Path=Value}"/>
+                        <Label Height="50" Margin="0,0,0,0" Content="{Binding Path=Key}"/>
 
                         </StackPanel>
                 </DataTemplate>
