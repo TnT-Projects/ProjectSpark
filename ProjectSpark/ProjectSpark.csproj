@@ -80,9 +80,9 @@
     <Compile Include="Pages\Products.xaml.cs">
       <DependentUpon>Products.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Printing.cs" />
-    <Compile Include="Scanner.cs" />
-    <Compile Include="ServerConnection.cs" />
+    <Compile Include="Business Logic\Printing.cs" />
+    <Compile Include="Business Logic\Scanner.cs" />
+    <Compile Include="Business Logic\ServerConnection.cs" />
     <Compile Include="Switcher\ISwitchable.cs" />
     <Compile Include="Switcher\Switcher.cs" />
     <Compile Include="TestTabel.cs" />
