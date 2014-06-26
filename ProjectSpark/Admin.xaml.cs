@@ -21,6 +21,7 @@ namespace ProjectSpark
     {
         public Admin()
         {
+            //Hier start de code
             InitializeComponent();
         }
     }
