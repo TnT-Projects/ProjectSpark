@@ -8,7 +8,14 @@ namespace ProjectSpark.MySql_Klassen
     {
         int cat_id;
         string cat_naam;
+        int cat_prioriteit;
 
+        public categorie(int id, string cat_naam, int cat_prioriteit)
+        {
+            this.cat_id = id;
+            this.cat_naam = cat_naam;
+            this.cat_prioriteit = cat_prioriteit;
+        }
 
         public int Cat_id
         {
@@ -21,13 +28,13 @@ namespace ProjectSpark.MySql_Klassen
             get { return cat_naam; }
             set { cat_naam = value; }
         }
-
-        public categorie(int id, string cat_naam)
+          
+        public int Cat_prioriteit
         {
-            this.cat_id = id;
-            this.cat_naam = cat_naam;
+            get { return cat_prioriteit; }
+            set { cat_prioriteit = value; }
         }
-
+        
         public override string ToString()
         {
             return cat_naam.ToString();

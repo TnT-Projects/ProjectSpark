@@ -13,6 +13,16 @@ namespace ProjectSpark.MySql_Klassen
         int prd_cat_id;
         string prd_naam;
         float prd_prijs;
+        bool prd_enable;
+
+        public producten(int prd_id, int prd_cat_id, string prd_naam, float prd_prijs, bool prd_enable)
+        {
+            this.prd_id = prd_id;
+            this.prd_cat_id = prd_cat_id;
+            this.prd_naam = prd_naam;
+            this.prd_prijs = prd_prijs;
+            this.prd_enable = prd_enable;
+        }
 
         public int Prd_id
         {
@@ -38,12 +48,10 @@ namespace ProjectSpark.MySql_Klassen
             set { prd_prijs = value; }
         }
 
-        public producten(int prd_id, int prd_cat_id, string prd_naam, float prd_prijs)
+        public bool Prd_enable
         {
-            this.prd_id = prd_id;
-            this.prd_cat_id = prd_cat_id;
-            this.prd_naam = prd_naam;
-            this.prd_prijs = prd_prijs;
+            get { return prd_enable; }
+            set { prd_enable = value; }
         }
 
         public override string ToString()

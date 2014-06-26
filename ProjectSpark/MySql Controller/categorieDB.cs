@@ -24,7 +24,8 @@ namespace ProjectSpark.MySql_Controller_Klassen
                 {
                     int id = (int)rdr["cat_id"];
                     string naam = (string)rdr["cat_naam"];
-                    lijst.Add(new categorie(id, naam));
+                    int prioriteit = (int)rdr["cat_prioriteit"];
+                    lijst.Add(new categorie(id, naam, prioriteit));
                 }
             }
             catch (MySqlException ex)
