@@ -24,6 +24,9 @@ namespace ProjectSpark
 
             // Call PrintDocument method to send document to printer
             printDlg.PrintDocument(idpSource.DocumentPaginator, "Receipt");
+
+
+            //TEST COMMENT!!!
         }
     }
 }
