@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace ProjectSpark.MySql_Controller_Klassen
 {
-    class categorieDB
+    class CategorieDB
     {
-        public static List<categorie> getCategories()
+        public static List<Categorie> getCategories()
         {
-            List<categorie> lijst = new List<categorie>();
+            List<Categorie> lijst = new List<Categorie>();
             MySqlConnection conn = new MySqlConnection();
             MySqlCommand cmd;
             MySqlDataReader rdr;
@@ -25,7 +25,7 @@ namespace ProjectSpark.MySql_Controller_Klassen
                     int id = (int)rdr["cat_id"];
                     string naam = (string)rdr["cat_naam"];
                     int prioriteit = (int)rdr["cat_prioriteit"];
-                    lijst.Add(new categorie(id, naam, prioriteit));
+                    lijst.Add(new Categorie(id, naam, prioriteit));
                 }
             }
             catch (MySqlException ex)

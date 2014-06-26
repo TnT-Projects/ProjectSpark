@@ -27,21 +27,21 @@ namespace ProjectSpark.Pages
     public partial class Sales : UserControl, ISwitchable
     {
         Scanner scanner;
-        List<producten> selectedProducts;
-        Dictionary<producten, int> counts;
+        List<Product> selectedProducts;
+        Dictionary<Product, int> counts;
         public Sales()
         {
             InitializeComponent();
             ((MainWindow)Switcher.Switcher.pageSwitcher).Title = "Verkoop";
             scanner = new Scanner();
             scanner.scanEvent += scanner_scanEvent;
-            selectedProducts = new List<producten>();
+            selectedProducts = new List<Product>();
             counts = selectedProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
             //lbx_Products.Items.Clear();
             lbx_Products.ItemsSource = counts;
 
             //Aanmaken van tabs uit de database
-            foreach (categorie item in categorieDB.getCategories())
+            foreach (Categorie item in CategorieDB.getCategories())
             {
                 TabItem test = new TabItem();
                 test.Header = item.Cat_naam;
@@ -53,7 +53,7 @@ namespace ProjectSpark.Pages
             foreach (TabItem item in tbc_Products.Items)
             {
                 WrapPanel wrpPanel = new WrapPanel();
-                foreach (producten product in productenDB.getProductsByCategories((int)item.Tag))
+                foreach (Product product in ProductDB.getProductsByCategories((int)item.Tag))
                 {
                     Button button = new Button();
                     {
@@ -81,15 +81,15 @@ namespace ProjectSpark.Pages
 
         void button_Click(object sender, RoutedEventArgs e)
         {
-            producten product = (producten)((Button)sender).Tag;
+            Product product = (Product)((Button)sender).Tag;
 
             selectedProducts.Add(product);
             lbl_SelectedProduct.Content = product.Prd_naam;
             UpdateProductListbox();
 
-            foreach (KeyValuePair<producten, int> item in lbx_Products.Items)
+            foreach (KeyValuePair<Product, int> item in lbx_Products.Items)
             {
-                if (((producten)item.Key).Prd_naam.Equals(product.Prd_naam))
+                if (((Product)item.Key).Prd_naam.Equals(product.Prd_naam))
                 {
                     lbx_Products.SelectedItem = item;
                 }
@@ -126,10 +126,10 @@ namespace ProjectSpark.Pages
             {
                 int selectedIndex = lbx_Products.SelectedIndex;
 
-                lbl_SelectedProduct.Content = "- " + ((producten)(((KeyValuePair<producten, int>)lbx_Products.SelectedItem).Key)).Prd_naam;
+                lbl_SelectedProduct.Content = "- " + ((Product)(((KeyValuePair<Product, int>)lbx_Products.SelectedItem).Key)).Prd_naam;
 
                 // Figure out a way to remove LAST added product of that name
-                selectedProducts.RemoveAt(GetLastIndexOfProduct((producten)(((KeyValuePair<producten, int>)lbx_Products.SelectedItem).Key))); //((tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_Products.SelectedItem).Key));
+                selectedProducts.RemoveAt(GetLastIndexOfProduct((Product)(((KeyValuePair<Product, int>)lbx_Products.SelectedItem).Key))); //((tbl_producten)(((KeyValuePair<tbl_producten, int>)lbx_Products.SelectedItem).Key));
                 UpdateProductListbox();
                 if (selectedIndex > (lbx_Products.Items.Count - 1))
                 {
@@ -147,7 +147,7 @@ namespace ProjectSpark.Pages
             
         }
 
-        private int GetLastIndexOfProduct(producten product)
+        private int GetLastIndexOfProduct(Product product)
         {
             for (int i = selectedProducts.Count - 1; i > -1; i--)
             {

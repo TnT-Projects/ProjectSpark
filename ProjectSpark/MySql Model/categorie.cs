@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace ProjectSpark.MySql_Klassen
 {
-    class categorie
+    class Categorie
     {
         int cat_id;
         string cat_naam;
         int cat_prioriteit;
 
-        public categorie(int id, string cat_naam, int cat_prioriteit)
+        public Categorie(int id, string cat_naam, int cat_prioriteit)
         {
             this.cat_id = id;
             this.cat_naam = cat_naam;

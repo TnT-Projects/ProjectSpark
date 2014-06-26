@@ -22,14 +22,14 @@ namespace ProjectSpark.Pages
     /// </summary>
     public partial class Products : UserControl
     {
-        producten selectedProduct;
+        Product selectedProduct;
         public Products()
         {
             InitializeComponent();
             //Vul listbox met producten
-            lbx_products.ItemsSource = productenDB.getProducts();
+            lbx_products.ItemsSource = ProductDB.getProducts();
             //Vul combobox met categorien
-            cbb_categories.ItemsSource = categorieDB.getCategories();
+            cbb_categories.ItemsSource = CategorieDB.getCategories();
             //Disable controls untill they're filled
             tbx_productNaam.IsEnabled = false;
             tbx_productPrijs.IsEnabled = false;
@@ -43,13 +43,13 @@ namespace ProjectSpark.Pages
             tbx_productPrijs.IsEnabled = true;
             cbb_categories.IsEnabled = true;
 
-            selectedProduct = (producten)lbx_products.SelectedItem;
+            selectedProduct = (Product)lbx_products.SelectedItem;
 
             tbx_productNaam.Text = selectedProduct.Prd_naam;
 
             tbx_productPrijs.Text = selectedProduct.Prd_prijs.ToString();
 
-            foreach (categorie item in cbb_categories.Items)
+            foreach (Categorie item in cbb_categories.Items)
             {
                 if (selectedProduct.Prd_cat_id.Equals(item.Cat_id))
                 {

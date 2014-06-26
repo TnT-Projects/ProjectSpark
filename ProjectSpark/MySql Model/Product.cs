@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSpark.MySql_Klassen
 {
-    public class producten
+    public class Product
     {
         int prd_id;
         int prd_cat_id;
@@ -15,7 +15,7 @@ namespace ProjectSpark.MySql_Klassen
         float prd_prijs;
         bool prd_enable;
 
-        public producten(int prd_id, int prd_cat_id, string prd_naam, float prd_prijs, bool prd_enable)
+        public Product(int prd_id, int prd_cat_id, string prd_naam, float prd_prijs, bool prd_enable)
         {
             this.prd_id = prd_id;
             this.prd_cat_id = prd_cat_id;
