@@ -115,7 +115,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button x:Name="btn_Pay" Margin="0,0,10,10" Content="å" Height="76" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="165" Click="btn_Pay_Click" FontFamily="/ProjectSpark;component/Content/Fonts/#Sosa" FontSize="48"/>
-        <Button x:Name="btn_removeProduct" Content="ç" Margin="0,0,195,10" Click="btn_removeProduct_Click" Height="76" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="165" FontFamily="/ProjectSpark;component/Content/Fonts/#Sosa" FontSize="48"/>
+        <Button x:Name="btn_removeProduct" Content="ç" Margin="0,0,195,10" Click="btn_removeProduct_Click" Height="76" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="165" FontFamily="/ProjectSpark;component/Content/Fonts/#Sosa" FontSize="48" Foreground="Black"/>
         <Label x:Name="lbl_SelectedProduct" Margin="180,0,365,21" FontSize="40" FontFamily="Courier New" FontWeight="Medium" TextOptions.TextFormattingMode="Display" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" Foreground="#FF192674" Height="56" VerticalAlignment="Bottom" />
 
     </Grid>

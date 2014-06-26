@@ -11,7 +11,7 @@
             <ImageBrush ImageSource="/ProjectSpark;component/Content/Images/background.jpg"/>
         </Grid.Background>
         <Button x:Name="btn_Back" HorizontalAlignment="Left" Margin="10,0,0,10" Width="97" Height="76" VerticalAlignment="Bottom" Click="btn_Back_Click" Content="Vorige"/>
-        <ListBox x:Name="lbx_Products" FontFamily="Courier New" FontSize="18" HorizontalAlignment="Right" Width="347" Margin="0,61,908,91" MouseLeftButtonUp="lbx_Products_MouseLeftButtonUp">
+        <ListBox x:Name="lbx_Products" FontFamily="Courier New" FontSize="18" Margin="10,61,0,91" MouseLeftButtonUp="lbx_Products_MouseLeftButtonUp" HorizontalAlignment="Left" Width="347">
             <ListBox.ItemTemplate>
                 <DataTemplate>
 
@@ -25,7 +25,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="lbx_SubProducts" FontFamily="Courier New" FontSize="18" HorizontalAlignment="Right" Width="347" Margin="0,61,556,91" MouseLeftButtonUp="lbx_SubProducts_MouseLeftButtonUp">
+        <ListBox x:Name="lbx_SubProducts" FontFamily="Courier New" FontSize="18" HorizontalAlignment="Left" Width="347" Margin="362,61,0,91" MouseLeftButtonUp="lbx_SubProducts_MouseLeftButtonUp">
             <ListBox.ItemTemplate>
                 <DataTemplate>
 

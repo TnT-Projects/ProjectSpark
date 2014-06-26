@@ -100,7 +100,11 @@ namespace ProjectSpark.Pages
                         MessageBox.Show("Instellingen niet beschikbaar!");
                         break;
                     case 8: //AFSLUITEN
-                        MessageBox.Show("Afsluiten niet beschikbaar!");
+                        //MessageBox.Show("Afsluiten niet beschikbaar!");
+                        if (MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten?", "Waarschuwing!", MessageBoxButton.YesNo, MessageBoxImage.Question).Equals(MessageBoxResult.Yes))
+                        {
+                            Switcher.Switcher.pageSwitcher.Close();
+                        }
                         break;
                     default:
                         break;
