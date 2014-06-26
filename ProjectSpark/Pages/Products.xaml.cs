@@ -57,5 +57,10 @@ namespace ProjectSpark.Pages
                 }
             }
         }
+
+        private void btn_MainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switcher.Switch(new Main());
+        }
     }
 }
