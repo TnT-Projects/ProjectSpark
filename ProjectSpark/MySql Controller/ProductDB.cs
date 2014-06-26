@@ -49,32 +49,40 @@ namespace ProjectSpark.MySql_Controller_Klassen
             }
             return lijst;
         }
-        /*public static bool addProduct(int cad_id, string naam, float prijs, bool enable)
+        
+        public static bool addProduct(int cat_id, string naam, float prijs, bool enable)
         {
-            connection.Open();
-            SqlCommand command = new SqlCommand(null, connection);
+            MySqlConnection conn = new MySqlConnection();
+            MySqlCommand cmd = new MySqlCommand();
 
-            // Create and prepare an SQL statement.
-            command.CommandText =
-                "INSERT INTO Region (RegionID, RegionDescription) " +
-                "VALUES (@id, @desc)";
-            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int, 0);
-            SqlParameter descParam =
-                new SqlParameter("@desc", SqlDbType.Text, 100);
-            idParam.Value = 20;
-            descParam.Value = "First Region";
-            command.Parameters.Add(idParam);
-            command.Parameters.Add(descParam);
+            try
+            {
+                conn = ConnectionDB.getConnection();
+                conn.Open();
+                cmd.Connection = conn;
 
-            // Call Prepare after setting the Commandtext and Parameters.
-            command.Prepare();
-            command.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO tbl_producten (prd_id, prd_cat_id, prd_naam, prd_prijs, prd_enable)" +
+                    " VALUES (NULL, @cat_id, @naam, @prijs, @enable)";
+                cmd.Prepare();
 
-            // Change parameter values and call ExecuteNonQuery.
-            command.Parameters[0].Value = 21;
-            command.Parameters[1].Value = "Second Region";
-            command.ExecuteNonQuery();
-            return true;
-        }*/
+                cmd.Parameters.AddWithValue("@cat_id", cat_id);
+                cmd.Parameters.AddWithValue("@naam", naam);
+                cmd.Parameters.AddWithValue("@prijs", prijs);
+                cmd.Parameters.AddWithValue("@enable", enable);
+
+                cmd.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Fout bij het invoegen van gegevens: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }
