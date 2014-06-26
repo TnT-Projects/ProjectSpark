@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Business Logic\StringEditor.cs" />
     <Compile Include="MySql Controller\ConnectionDB.cs" />
     <Compile Include="MySql Controller\CategorieDB.cs" />
     <Compile Include="MySql Controller\ProductDB.cs" />
