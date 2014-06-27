@@ -47,8 +47,11 @@ namespace ProjectSpark.Pages
         //Update listbox view
         private void UpdateSubProductListbox()
         {
-            Dictionary<Product, int> counts = subProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
-            lbx_SubProducts.ItemsSource = counts;
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                Dictionary<Product, int> counts = subProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+                lbx_SubProducts.ItemsSource = counts;
+            }));
         }
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)
@@ -112,54 +115,40 @@ namespace ProjectSpark.Pages
 
         private void btn_Pay_Click(object sender, RoutedEventArgs e)
         {
-            double totaal = 0;
             if (subProducts.Count > 0)
             {
-                foreach (Product item in subProducts)
-                {
-                    totaal += item.Prd_prijs;
-                }
-
-
-
-                insertThread = new Thread(new ThreadStart(PrintPayment));
+                insertThread = new Thread(new ThreadStart(PrintSubPayment));
                 insertThread.SetApartmentState(ApartmentState.STA);
-
-                //MessageBox.Show("AFGEREKENT! TOTAAL PRIJS: " + totaal);
-                subProducts.Clear();
-                UpdateSubProductListbox();
+                insertThread.Start();
             }
             else
             {
-                foreach (Product item in products)
-                {
-                    totaal += item.Prd_prijs;
-                }
-
-
                 insertThread = new Thread(new ThreadStart(FinnishPayment));
                 insertThread.SetApartmentState(ApartmentState.STA);
                 insertThread.Start();
 
-                UpdateProductListbox();
-                Switcher.Switcher.Switch(new Sales());
+                //UpdateProductListbox();
+               
             }
         }
 
-        private void PrintPayment()
+        private void PrintSubPayment()
         {
-            CreateFlowDocument(subProducts);
+            Printing.Print(CreateFlowDocument(subProducts, true));
+            subProducts.Clear();
+            UpdateSubProductListbox();
         }
 
         private void FinnishPayment()
         {
             //MessageBox.Show(products.Count+"");
-            Printing.Print(CreateFlowDocument(products));
-            products.Clear();
+            Printing.Print(CreateFlowDocument(products, false));
+            //products.Clear();
+            Switcher.Switcher.Switch(new Sales());
             // PUT INTO DB!! :D
         }
 
-        private FlowDocument CreateFlowDocument(List<Product> list)
+        private FlowDocument CreateFlowDocument(List<Product> list, bool subRekening)
         {
             // Create a FlowDocument
             FlowDocument doc = new FlowDocument();
@@ -170,14 +159,14 @@ namespace ProjectSpark.Pages
 
 
             // Create Paragraphs
-            Paragraph p1 = new Paragraph();
+            Paragraph p1 = new Paragraph(); //Company logo or name
             p1.Inlines.Add(new Run(" "));
             p1.TextAlignment = TextAlignment.Center;
-            Paragraph p2 = new Paragraph();
-            Paragraph p3 = new Paragraph();
-            Paragraph p4 = new Paragraph();
-            Paragraph p5 = new Paragraph();
-            Paragraph p6 = new Paragraph();
+            Paragraph p2 = new Paragraph(); //
+            Paragraph p3 = new Paragraph(); //Products
+            Paragraph p4 = new Paragraph(); //
+            Paragraph p5 = new Paragraph(); //
+            Paragraph p6 = new Paragraph(); //
 
             ////Create Logo
 
@@ -214,29 +203,34 @@ namespace ProjectSpark.Pages
             //{
             //    p2.Inlines.Add(new Run("\n\n" + info.OpeningsHours));
             //}
+            p2.Inlines.Add(new Run(DateTime.Now.ToString()));
             p2.Inlines.Add(new Run("\n----------------------------------------------------------"));
             //p3.Inlines.Add(new Run("Tafel:\t" + bill.Table + "\n\n"));
+            if (subRekening)
+            {
+                p3.Inlines.Add(new Run("Subrekening\n"));
+            }
             p3.Inlines.Add(new Run("#\tOmschrijving\t\t   Prijs\n"));
             p3.Inlines.Add(new Run("----------------------------------------------------------\n"));
             //(producten)(((KeyValuePair<producten, int>)lbx_SubProducts.SelectedItem).Key));
-            int count = 0;
+            double count = 0;
             Dictionary<Product, int> countedList = list.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
             foreach (KeyValuePair<Product, int> item in countedList)
             {
                 //MessageBox.Show(item.ToString());
                 Product product = (Product)(item).Key;
-                if (product.Prd_naam.ToString().Count() < 8)
+                if (product.Prd_naam.ToString().Count() < 9)
                 {
-                    p3.Inlines.Add(new Run(item.Value + " \t" + product.Prd_naam.ToString() + "\t\t\t   " + product.Prd_prijs + "\n"));
+                    p3.Inlines.Add(new Run(item.Value + " \t" + product.Prd_naam.ToString() + "\t\t\t   " + StringEditor.ConvertToCurrency(product.Prd_prijs) + "\n"));
                 }
                 else
                 {
-                    p3.Inlines.Add(new Run(item.Value + " \t" + StringEditor.Truncate(product.Prd_naam.ToString(), 14) + "\t\t   " + product.Prd_prijs + "\n"));
+                    p3.Inlines.Add(new Run(item.Value + " \t" + StringEditor.Truncate(product.Prd_naam.ToString(), 14) + "\t\t   " + StringEditor.ConvertToCurrency(product.Prd_prijs) + "\n"));
                 }
-                count++;
+                count += product.Prd_prijs;
             }
-            p3.Inlines.Add(new Run("\t\t\t\t   -------\n"));
-            p3.Inlines.Add(new Run("\tTotaal:\t\t\t   " + count.ToString()));// + PriceString.convertToPrice(bill.TotalPrice)));
+            p3.Inlines.Add(new Run("\t\t\t\t   --------\n"));
+            p3.Inlines.Add(new Run("\tTotaal:\t\t\t   " + StringEditor.ConvertToCurrency(count)));// + PriceString.convertToPrice(bill.TotalPrice)));
             p3.Inlines.Add(new Run("\n----------------------------------------------------------"));
             //p6.Inlines.Add(new Run("Geholpen door " + bill.Waiter.ToString() + "\nOp: " + DateTime.Now));
             //System.Windows.Controls.Image barimage = new System.Windows.Controls.Image();
