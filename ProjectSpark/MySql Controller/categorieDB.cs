@@ -13,7 +13,7 @@ namespace ProjectSpark.MySql_Controller_Klassen
             MySqlConnection conn = new MySqlConnection();
             MySqlCommand cmd;
             MySqlDataReader rdr;
-            string stm = "Select * FROM tbl_categorie";
+            string stm = "SELECT * FROM tbl_categorie";
             try
             {
                 conn = ConnectionDB.getConnection();
@@ -37,6 +37,73 @@ namespace ProjectSpark.MySql_Controller_Klassen
                 conn.Close();
             }
             return lijst;
+        }
+
+        public static bool addCategorie(string naam, int prioriteit)
+        {
+            MySqlConnection conn = new MySqlConnection();
+            MySqlCommand cmd = new MySqlCommand();
+
+            try
+            {
+                conn = ConnectionDB.getConnection();
+                conn.Open();
+                cmd.Connection = conn;
+
+                cmd.CommandText = "INSERT INTO tbl_categorie (cat_id, cat_naam, cat_prioriteit)" +
+                    " VALUES (NULL, @naam, @prioriteit)";
+                cmd.Prepare();
+
+                cmd.Parameters.AddWithValue("@naam", naam);
+                cmd.Parameters.AddWithValue("@prioriteit", prioriteit);
+
+                cmd.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Fout bij het invoegen van gegevens: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static bool editdCategorie(string naam, int prioriteit, int cat_id)
+        {
+            MySqlConnection conn = new MySqlConnection();
+            MySqlCommand cmd = new MySqlCommand();
+
+            try
+            {
+                conn = ConnectionDB.getConnection();
+                conn.Open();
+                cmd.Connection = conn;
+
+                cmd.CommandText = "UPDATE tbl_categorie" +
+                    " SET cat_naam = @naam, cat_prioriteit = @prioriteit WHERE cat_id = @cat_id";
+                cmd.Prepare();
+
+                cmd.Parameters.AddWithValue("@naam", naam);
+                cmd.Parameters.AddWithValue("@prioriteit", prioriteit);
+                cmd.Parameters.AddWithValue("@cat_id", cat_id);
+
+                cmd.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Fout bij het invoegen van gegevens: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

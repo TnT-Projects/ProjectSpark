@@ -84,5 +84,40 @@ namespace ProjectSpark.MySql_Controller_Klassen
                 conn.Close();
             }
         }
+        public static bool editProduct(int product_id, int cat_id, string naam, float prijs, bool enable)
+        {
+            MySqlConnection conn = new MySqlConnection();
+            MySqlCommand cmd = new MySqlCommand();
+
+            try
+            {
+                conn = ConnectionDB.getConnection();
+                conn.Open();
+                cmd.Connection = conn;
+                
+                cmd.CommandText = "UPDATE tbl_producten" +
+                    " SET prd_cat_id = @cat_id, prd_naam = @naam, prd_prijs = @prijs, prd_enable = @enable WHERE prd_id = @product_id";
+                cmd.Prepare();
+
+                cmd.Parameters.AddWithValue("@cat_id", cat_id);
+                cmd.Parameters.AddWithValue("@naam", naam);
+                cmd.Parameters.AddWithValue("@prijs", prijs);
+                cmd.Parameters.AddWithValue("@enable", enable);
+                cmd.Parameters.AddWithValue("@product_id", product_id);
+
+                cmd.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Fout bij het invoegen van gegevens: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }
