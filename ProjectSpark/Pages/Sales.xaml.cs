@@ -1,4 +1,5 @@
-﻿using ProjectSpark.MySql_Controller_Klassen;
+﻿using ProjectSpark.Business_Logic;
+using ProjectSpark.MySql_Controller_Klassen;
 using ProjectSpark.MySql_Klassen;
 using ProjectSpark.Switcher;
 using System;
@@ -57,10 +58,18 @@ namespace ProjectSpark.Pages
                 {
                     Button button = new Button();
                     {
-                        button.Content = product.Prd_naam;
+                        if (product.Prd_naam.Length <= 20)
+                        {
+                            button.Content = product.Prd_naam;
+                        }
+                        else
+                        {
+                            button.Content = StringEditor.SplitToNewLine(product.Prd_naam, 20);
+                        }
+                        
                         button.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-                        button.Width = 125;
-                        button.Height = 125;
+                        button.Width = 137;
+                        button.Height = 120;
                         button.Margin = new Thickness(5);
                         button.Tag = product;
                         button.Background = Brushes.GhostWhite;
@@ -98,10 +107,8 @@ namespace ProjectSpark.Pages
 
         private void UpdateProductListbox()
         {
-            //var count = selectedProducts.GroupBy(x => x).Select(x => new {Name = x.Key, Total = x.Count() }).ToList();
             counts = selectedProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
-            //lbx_Products.Items.Clear();
-            lbx_Products.ItemsSource = counts;// selectedProducts.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count()); ;
+            lbx_Products.ItemsSource = counts;
         }
 
         void scanner_scanEvent(string EAN)
@@ -141,7 +148,6 @@ namespace ProjectSpark.Pages
             else
             {
                 lbl_SelectedProduct.Content = "Geen product geselecteerd!";
-                //MessageBox.Show("Er dient eerst een product geselecteerd te worden, alvorens te verwijderen.");
             }
 
             

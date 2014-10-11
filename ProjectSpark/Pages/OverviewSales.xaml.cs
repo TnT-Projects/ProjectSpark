@@ -64,7 +64,7 @@ namespace ProjectSpark.Pages
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ProjectSpark.MySql_Controller_Klassen.ProductDB.addProduct(1, "Red Bull", 2f, true);
+            //ProjectSpark.MySql_Controller_Klassen.ProductDB.addProduct(Type, "Name", 5f, true);
         }
     }
 }

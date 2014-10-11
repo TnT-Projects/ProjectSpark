@@ -127,6 +127,7 @@ namespace ProjectSpark.Pages
                 insertThread.SetApartmentState(ApartmentState.STA);
                 insertThread.Start();
 
+                Switcher.Switcher.Switch(new Sales());
                 //UpdateProductListbox();
                
             }
@@ -144,7 +145,6 @@ namespace ProjectSpark.Pages
             //MessageBox.Show(products.Count+"");
             Printing.Print(CreateFlowDocument(products, false));
             //products.Clear();
-            Switcher.Switcher.Switch(new Sales());
             // PUT INTO DB!! :D
         }
 
